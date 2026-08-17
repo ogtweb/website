@@ -1,0 +1,507 @@
+---
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  FolderKanban,
+  Github,
+  GraduationCap,
+  Linkedin,
+  Mail,
+  Network,
+  ShieldCheck,
+  UserRound,
+} from "lucide-astro";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const professionalLinks = [
+  {
+    name: "GitHub",
+    href: "https://github.com/sprackles",
+    icon: Github,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/oscar-granados-/",
+    icon: Linkedin,
+  },
+  {
+    name: "Email",
+    href: "mailto:oscar@ogtech.dev",
+    icon: Mail,
+  },
+];
+
+const focusAreas = [
+  {
+    title: "IT operations",
+    description:
+      "Hands-on support across endpoints, business systems, service workflows, and fast-moving environments.",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "Infrastructure",
+    description:
+      "A practical interest in networks, Linux, cloud fundamentals, and the systems behind reliable technology.",
+    icon: Network,
+  },
+  {
+    title: "Security",
+    description:
+      "Developing deeper security skills through coursework, certifications, labs, and documented practice.",
+    icon: ShieldCheck,
+  },
+];
+
+const sections = [
+  {
+    label: "01",
+    title: "About",
+    description:
+      "My background, technical interests, and approach to learning and problem solving.",
+    href: "/about",
+    action: "About me",
+    icon: UserRound,
+  },
+  {
+    label: "02",
+    title: "Resume",
+    description:
+      "My work experience, education, technical strengths, and certifications.",
+    href: "/resume",
+    action: "Review my experience",
+    icon: GraduationCap,
+  },
+  {
+    label: "03",
+    title: "Projects",
+    description:
+      "A preview of technical projects with detailed writeups coming later.",
+    href: "/projects",
+    action: "See the project preview",
+    icon: FolderKanban,
+  },
+  {
+    label: "04",
+    title: "Lab",
+    description:
+      "Technical notes and writeups from the subjects and systems I am studying.",
+    href: "/lab/",
+    action: "Visit my lab",
+    icon: ShieldCheck,
+  },
+];
+---
+
+<MainLayout
+  title="Oscar Granados"
+  description="The professional website of Oscar Granados: IT experience, computer science studies, technical projects, and security-focused lab notes."
+  pageClass="home-page"
+>
+  <div class="page-shell">
+    <section class="home-hero" aria-labelledby="home-heading">
+      <div class="hero-copy">
+        <p class="eyebrow">Oscar Granados</p>
+        <h1 id="home-heading">IT professional and computer science student.</h1>
+        <p class="hero-role">
+          Technical support <span aria-hidden="true">&middot;</span> Infrastructure
+          <span aria-hidden="true">&middot;</span> Information security
+        </p>
+        <p class="hero-intro">
+          I have experience supporting endpoints, business systems, networks, and
+          users in operational environments. I am completing a bachelor&rsquo;s degree
+          in computer science and developing deeper skills in infrastructure and
+          information security.
+        </p>
+
+        <div class="button-row hero-actions">
+          <a class="button primary" href="/resume">
+            View my resume <ArrowRight aria-hidden="true" />
+          </a>
+          <a class="button" href="/about">About me</a>
+        </div>
+
+        <div class="professional-links" aria-label="Professional profiles">
+          {
+            professionalLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <a href={link.href} aria-label={link.name}>
+                  <Icon aria-hidden="true" />
+                  <span>{link.name}</span>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="focus-section" aria-labelledby="focus-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Professional focus</p>
+          <h2 id="focus-heading">Skills and areas of focus</h2>
+          <p>
+            My experience is primarily in technical support and IT operations,
+            with continued study in infrastructure, computer science, and security.
+          </p>
+        </div>
+      </div>
+
+      <div class="focus-grid">
+        {
+          focusAreas.map((area) => {
+            const Icon = area.icon;
+            return (
+              <article class="focus-card">
+                <Icon aria-hidden="true" />
+                <h3>{area.title}</h3>
+                <p>{area.description}</p>
+              </article>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <section class="explore-section" aria-labelledby="explore-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">More information</p>
+          <h2 id="explore-heading">Site sections</h2>
+          <p>
+            View my background, experience, planned project writeups, and current
+            technical notes.
+          </p>
+        </div>
+      </div>
+
+      <div class="explore-grid">
+        {
+          sections.map((section) => {
+            const Icon = section.icon;
+            return (
+              <a class="explore-card" href={section.href}>
+                <div class="card-topline">
+                  <span>{section.label}</span>
+                  <Icon aria-hidden="true" />
+                </div>
+                <h3>{section.title}</h3>
+                <p>{section.description}</p>
+                <span class="card-action">
+                  {section.action} <ArrowRight aria-hidden="true" />
+                </span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <section class="current-band panel" aria-labelledby="current-heading">
+      <div>
+        <p class="eyebrow">Current focus</p>
+        <h2 id="current-heading">Coursework, projects, and documentation</h2>
+      </div>
+      <p>
+        I am currently completing coursework, developing this website, and
+        creating a stronger structure for future projects, writeups, and notes.
+      </p>
+      <a class="text-link" href="/lab/">
+        See what I am working on <span aria-hidden="true">&rarr;</span>
+      </a>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .home-hero {
+    position: relative;
+    min-height: min(78vh, 49rem);
+    display: flex;
+    align-items: center;
+    padding-block: clamp(5rem, 12vw, 8.5rem);
+  }
+
+  .home-hero::before {
+    position: absolute;
+    z-index: -1;
+    top: 7%;
+    right: -9rem;
+    width: min(42rem, 54vw);
+    aspect-ratio: 1;
+    border: 1px solid rgb(31 198 229 / 10%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 0 38%, rgb(31 198 229 / 6%) 38.3% 38.8%, transparent 39.1%),
+      radial-gradient(circle at 50% 50%, transparent 0 63%, rgb(244 86 157 / 6%) 63.2% 63.7%, transparent 64%),
+      radial-gradient(circle at 34% 23%, var(--color-cyan-bright) 0 1px, transparent 2px),
+      radial-gradient(circle at 78% 62%, var(--color-pink) 0 1px, transparent 2px),
+      radial-gradient(circle at 24% 71%, var(--color-blue) 0 1px, transparent 2px);
+    content: "";
+    opacity: 0.72;
+    pointer-events: none;
+    transform: rotate(-12deg);
+  }
+
+  .hero-copy {
+    max-width: 53rem;
+  }
+
+  .hero-copy h1 {
+    max-width: 10ch;
+    margin-block-end: 1.4rem;
+    font-size: clamp(3.6rem, 9vw, 7rem);
+    font-weight: 740;
+    letter-spacing: -0.06em;
+    text-shadow: 0 0 2.5rem rgb(31 198 229 / 10%);
+  }
+
+  .hero-role {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    margin-block-end: 1rem;
+    color: var(--color-cyan-high);
+    font-size: clamp(1rem, 1.7vw, 1.12rem);
+    font-weight: 580;
+  }
+
+  .hero-role span {
+    color: var(--color-pink);
+  }
+
+  .hero-intro {
+    max-width: 42rem;
+    margin-block-end: 1.75rem;
+    color: var(--color-text-soft);
+    font-size: clamp(1.06rem, 1.8vw, 1.22rem);
+  }
+
+  .hero-actions {
+    margin-block-end: 1.5rem;
+  }
+
+  .professional-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1.25rem;
+  }
+
+  .professional-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .professional-links a:hover {
+    color: var(--color-cyan-high);
+  }
+
+  .professional-links :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-cyan);
+  }
+
+  .focus-section,
+  .explore-section {
+    padding-block-start: var(--section-space);
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border);
+  }
+
+  .focus-card {
+    padding: 1.75rem;
+  }
+
+  .focus-card + .focus-card {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .focus-card :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-block-end: 2.5rem;
+    color: var(--color-cyan);
+  }
+
+  .focus-card:nth-child(2) :global(svg) {
+    color: var(--color-blue);
+  }
+
+  .focus-card:nth-child(3) :global(svg) {
+    color: var(--color-pink);
+  }
+
+  .focus-card h3 {
+    margin-block-end: 0.55rem;
+    font-size: 1.15rem;
+  }
+
+  .focus-card p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.94rem;
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .explore-card {
+    display: flex;
+    min-height: 19rem;
+    flex-direction: column;
+    border: 1px solid rgb(31 198 229 / 14%);
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(145deg, rgb(31 198 229 / 5%), rgb(244 86 157 / 2%)),
+      rgb(25 22 33 / 72%);
+    box-shadow: var(--shadow-panel);
+    color: inherit;
+    padding: clamp(1.35rem, 4vw, 2rem);
+    text-decoration: none;
+    transition:
+      transform 170ms ease,
+      border-color 170ms ease,
+      box-shadow 170ms ease;
+  }
+
+  .explore-card:nth-child(even) {
+    border-color: rgb(244 86 157 / 14%);
+  }
+
+  .explore-card:hover {
+    border-color: rgb(31 198 229 / 42%);
+    box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 25%);
+    transform: translateY(-2px);
+  }
+
+  .explore-card:nth-child(even):hover {
+    border-color: rgb(244 86 157 / 42%);
+  }
+
+  .card-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+  }
+
+  .card-topline :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--color-cyan);
+  }
+
+  .explore-card:nth-child(even) .card-topline :global(svg) {
+    color: var(--color-pink);
+  }
+
+  .explore-card h3 {
+    margin: auto 0 0.65rem;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+  }
+
+  .explore-card p {
+    max-width: 31rem;
+    margin-block-end: 1.5rem;
+    color: var(--color-text-soft);
+  }
+
+  .card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-cyan-high);
+    font-size: 0.9rem;
+    font-weight: 620;
+    padding-block-start: 1rem;
+  }
+
+  .card-action :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-cyan);
+    transition: transform 170ms ease;
+  }
+
+  .explore-card:hover .card-action :global(svg) {
+    transform: translateX(0.2rem);
+  }
+
+  .current-band {
+    display: grid;
+    grid-template-columns: 0.8fr 1.35fr auto;
+    align-items: end;
+    gap: 2rem;
+    margin-block-start: var(--section-space);
+    border-color: rgb(244 86 157 / 15%);
+    background: linear-gradient(125deg, rgb(244 86 157 / 6%), rgb(25 22 33 / 45%));
+    padding: clamp(1.4rem, 4vw, 2rem);
+  }
+
+  .current-band h2 {
+    margin: 0;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+  }
+
+  .current-band p {
+    margin: 0;
+    color: var(--color-text-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .home-hero {
+      min-height: auto;
+    }
+
+    .home-hero::before {
+      right: -13rem;
+      width: 32rem;
+    }
+
+    .current-band {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 43rem) {
+    .hero-copy h1 {
+      font-size: clamp(3.2rem, 17vw, 5.25rem);
+    }
+
+    .focus-grid,
+    .explore-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .focus-card + .focus-card {
+      border-top: 1px solid var(--color-border);
+      border-left: 0;
+    }
+
+    .focus-card :global(svg) {
+      margin-block-end: 1.5rem;
+    }
+
+    .explore-card {
+      min-height: 17rem;
+    }
+  }
+</style>

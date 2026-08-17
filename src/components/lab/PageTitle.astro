@@ -1,0 +1,59 @@
+---
+import { Badge } from '@astrojs/starlight/components';
+import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
+
+const data = Astro.locals.starlightRoute.entry.data as typeof Astro.locals.starlightRoute.entry.data & {
+  contentType?: 'navigation' | 'entry';
+  tags?: string[];
+};
+
+const tags =
+  data.contentType === 'entry'
+    ? [...new Set((data.tags ?? []).map((tag) => tag.trim()).filter(Boolean))]
+    : [];
+---
+
+<DefaultPageTitle />
+
+{
+  tags.length > 0 && (
+    <div class="entry-tags" role="group" aria-label="Tags">
+      <ul>
+        {tags.map((tag) => (
+          <li>
+            <Badge text={`#${tag}`} size="small" class="lab-entry-tag" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .entry-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.75rem;
+    margin-top: 0.9rem;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :global(.lab-entry-tag) {
+    border-color: rgb(31 198 229 / 24%);
+    border-radius: 999px;
+    background: linear-gradient(110deg, rgb(31 198 229 / 10%), rgb(244 86 157 / 7%));
+    color: #c9f8ff;
+    font-family: var(--sl-font-mono);
+    padding: 0.25rem 0.5rem;
+  }
+</style>

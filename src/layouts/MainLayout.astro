@@ -1,0 +1,66 @@
+---
+import "@fontsource-variable/rubik";
+import Navbar from "../components/Navbar.astro";
+import { MAIN_SITE, SITE_URL } from "../config/site.mjs";
+import "../styles/main.css";
+
+interface Props {
+  title: string;
+  description: string;
+  pageClass?: string;
+}
+
+const { title, description, pageClass = "" } = Astro.props;
+const pageTitle = title === MAIN_SITE.title ? title : `${title} | ${MAIN_SITE.title}`;
+const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
+const previewImageUrl = new URL(MAIN_SITE.iconPath, SITE_URL).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#100e17" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/png" href={MAIN_SITE.iconPath} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={MAIN_SITE.title} />
+    <meta property="og:image" content={previewImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={String(MAIN_SITE.iconWidth)} />
+    <meta property="og:image:height" content={String(MAIN_SITE.iconHeight)} />
+    <meta property="og:image:alt" content={MAIN_SITE.iconAlt} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={previewImageUrl} />
+    <meta name="twitter:image:alt" content={MAIN_SITE.iconAlt} />
+    <title>{pageTitle}</title>
+  </head>
+  <body class={pageClass}>
+    <Navbar currentPath={Astro.url.pathname} />
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="footer-name" href="/">Oscar Granados</a>
+          <p>Computer science, IT infrastructure, and information security.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Professional links">
+          <a href="https://github.com/sprackles">GitHub</a>
+          <a href="https://www.linkedin.com/in/oscar-granados-/">LinkedIn</a>
+          <a href="mailto:oscar@ogtech.dev">Email</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

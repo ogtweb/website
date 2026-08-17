@@ -1,0 +1,274 @@
+---
+import { ArrowRight, BookOpen, Network, ShieldCheck, Wrench } from "lucide-astro";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const interests = [
+  {
+    title: "Systems & infrastructure",
+    description:
+      "Understanding how networks, operating systems, cloud services, and physical technology fit together.",
+    icon: Network,
+  },
+  {
+    title: "Security",
+    description:
+      "Building practical security knowledge through structured study, labs, and careful documentation.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Building & troubleshooting",
+    description:
+      "Learning by working through real problems, testing ideas, and improving the result one step at a time.",
+    icon: Wrench,
+  },
+];
+---
+
+<MainLayout
+  title="About"
+  description="About Oscar Granados, his professional background, technical interests, and approach to learning."
+  pageClass="about-page"
+>
+  <div class="page-shell">
+    <header class="page-header about-header">
+      <p class="eyebrow">About me</p>
+      <h1>My background and interests</h1>
+      <!-- Starter copy: this introduction is ready to personalize as your story evolves. -->
+      <p class="page-intro">
+        I am an IT professional and computer science student with a growing focus
+        on infrastructure and information security. I enjoy understanding how
+        technology works in practice, solving the problems that appear around it,
+        and keeping a useful record of what I learn.
+      </p>
+    </header>
+
+    <section class="about-story" aria-labelledby="story-heading">
+      <div class="story-heading">
+        <p class="eyebrow">Background</p>
+        <h2 id="story-heading">Work and education</h2>
+      </div>
+
+      <div class="story-copy">
+        <!-- Starter copy: replace or expand these paragraphs with personal milestones. -->
+        <p>
+          My professional experience has taken me through operational environments,
+          technical support, endpoint troubleshooting, business systems, and the
+          everyday coordination required to keep technology useful for the people
+          relying on it.
+        </p>
+        <p>
+          Alongside that work, I am completing a bachelor&rsquo;s degree in computer
+          science and continuing to develop my knowledge of networks, Linux, cloud
+          computing, and security. The combination gives me two perspectives I
+          value: the practical needs in front of a user and the deeper systems
+          operating behind the screen.
+        </p>
+        <p class="lab-segue">
+          I document some of that hands-on learning in <a href="/lab/">my lab</a>,
+          including security writeups and technical notes that show how I work
+          through unfamiliar subjects and problems.
+        </p>
+      </div>
+    </section>
+
+    <section class="interests-section" aria-labelledby="interests-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Technical interests</p>
+          <h2 id="interests-heading">What I am studying and working with</h2>
+          <p>
+            My current interests center on infrastructure, security, and practical
+            technical problem solving.
+          </p>
+        </div>
+      </div>
+
+      <div class="interests-grid">
+        {
+          interests.map((interest) => {
+            const Icon = interest.icon;
+            return (
+              <article class="interest-card panel">
+                <Icon aria-hidden="true" />
+                <h3>{interest.title}</h3>
+                <p>{interest.description}</p>
+              </article>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- Starter section: personalize this with values, hobbies, or a detail not found on your resume. -->
+    <section class="personal-note panel" aria-labelledby="personal-heading">
+      <BookOpen aria-hidden="true" />
+      <div>
+        <p class="eyebrow">Outside of work</p>
+        <h2 id="personal-heading">More about me</h2>
+        <p>
+          When I'm not working, I'm an avid music lover and multi-instrumentalist (mostly guitar and keys). I love diving into new hobbies. My latest project is building a custom telescope and camera setup for astrophotography! I also enjoy hiking and exploring the incredible ecological diversity of the Las Vegas Valley. I'm always on the lookout for my next challenge, especially if it involves tinkering with complex technological systems.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-next" aria-labelledby="next-heading">
+      <div>
+        <p class="eyebrow">Related pages</p>
+        <h2 id="next-heading">Resume and lab</h2>
+      </div>
+      <div class="button-row">
+        <a class="button primary" href="/resume">
+          View my resume <ArrowRight aria-hidden="true" />
+        </a>
+        <a class="button" href="/lab/">Visit my lab</a>
+      </div>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .about-header {
+    max-width: 54rem;
+  }
+
+  .about-story {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1.35fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    border-block: 1px solid var(--color-border);
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  .story-heading h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .story-copy {
+    color: var(--color-text-soft);
+    font-size: clamp(1.02rem, 1.7vw, 1.13rem);
+  }
+
+  .story-copy p {
+    margin-block-end: 1.25rem;
+  }
+
+  .lab-segue a {
+    color: var(--color-cyan-high);
+    font-weight: 620;
+    text-decoration-color: rgb(31 198 229 / 45%);
+    text-underline-offset: 0.18em;
+  }
+
+  .lab-segue a:hover {
+    color: var(--color-cyan-bright);
+    text-decoration-color: var(--color-pink);
+  }
+
+  .interests-section {
+    padding-block-start: var(--section-space);
+  }
+
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .interest-card {
+    min-height: 18rem;
+    padding: 1.5rem;
+  }
+
+  .interest-card :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-block-end: 4rem;
+    color: var(--color-cyan);
+  }
+
+  .interest-card:nth-child(2) :global(svg) {
+    color: var(--color-blue);
+  }
+
+  .interest-card:nth-child(3) :global(svg) {
+    color: var(--color-pink);
+  }
+
+  .interest-card h3 {
+    margin-block-end: 0.6rem;
+    font-size: 1.15rem;
+  }
+
+  .interest-card p {
+    color: var(--color-text-soft);
+    font-size: 0.94rem;
+  }
+
+  .personal-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.5rem;
+    margin-block-start: var(--section-space);
+    border-color: rgb(244 86 157 / 16%);
+    background: linear-gradient(125deg, rgb(244 86 157 / 6%), rgb(25 22 33 / 45%));
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .personal-note > :global(svg) {
+    width: 1.45rem;
+    height: 1.45rem;
+    margin-block-start: 0.2rem;
+    color: var(--color-pink);
+  }
+
+  .personal-note h2 {
+    margin-block-end: 0.75rem;
+    font-size: clamp(1.65rem, 3vw, 2.2rem);
+  }
+
+  .personal-note p:last-child {
+    max-width: 47rem;
+    color: var(--color-text-soft);
+  }
+
+  .about-next {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-block-start: var(--section-space);
+  }
+
+  .about-next h2 {
+    max-width: 18ch;
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+  }
+
+  @media (max-width: 49rem) {
+    .about-story,
+    .interests-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .interest-card {
+      min-height: auto;
+    }
+
+    .interest-card :global(svg) {
+      margin-block-end: 2rem;
+    }
+
+    .about-next {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .personal-note {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

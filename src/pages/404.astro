@@ -1,0 +1,48 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Page not found"
+  description="The requested page could not be found."
+  pageClass="not-found-page"
+>
+  <div class="page-shell">
+    <section class="not-found" aria-labelledby="not-found-heading">
+      <p class="eyebrow">404</p>
+      <h1 id="not-found-heading">Page not found</h1>
+      <p>The page you requested does not exist or may have moved.</p>
+      <a class="button primary" href="/">Return to the main site</a>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    min-height: calc(100vh - 12rem);
+    max-width: 42rem;
+    align-content: center;
+    gap: 1rem;
+    padding-block: 5rem;
+  }
+
+  .not-found h1,
+  .not-found p {
+    margin: 0;
+  }
+
+  .not-found h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .not-found > p:not(.eyebrow) {
+    color: var(--color-text-soft);
+    font-size: 1.1rem;
+  }
+
+  .not-found .button {
+    justify-self: start;
+    margin-block-start: 0.75rem;
+  }
+</style>

@@ -1,0 +1,226 @@
+---
+import { Badge, Icon } from '@astrojs/starlight/components';
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarRestorePoint from '@astrojs/starlight/components/SidebarRestorePoint.astro';
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+
+type SidebarEntry = StarlightRouteData['sidebar'][number];
+type SidebarLink = Extract<SidebarEntry, { type: 'link' }>;
+
+interface Props {
+  sublist?: SidebarEntry[];
+  nested?: boolean;
+}
+
+const hasCurrentEntry = (entries: SidebarEntry[]): boolean =>
+  entries.some((entry) =>
+    entry.type === 'link' ? entry.isCurrent : hasCurrentEntry(entry.entries),
+  );
+
+const isGroupIndex = (entry: SidebarEntry): entry is SidebarLink =>
+  entry.type === 'link' && entry.attrs['data-group-index'] === 'true';
+
+const { sublist = Astro.locals.starlightRoute.sidebar, nested = false } = Astro.props;
+const isRoot = !Astro.props.sublist;
+---
+
+{
+  isRoot ? (
+    <>
+      <SidebarPersister>
+        <Astro.self sublist={sublist} />
+      </SidebarPersister>
+
+      <div class="md:sl-hidden">
+        <MobileMenuFooter />
+      </div>
+    </>
+  ) : (
+    <ul class:list={{ 'top-level': !nested }}>
+      {sublist.map((entry) => {
+        if (entry.type === 'link') {
+          return (
+            <li>
+              <a
+                href={entry.href}
+                aria-current={entry.isCurrent ? 'page' : undefined}
+                class:list={[{ large: !nested }, entry.attrs.class]}
+                {...entry.attrs}
+              >
+                <span>{entry.label}</span>
+                {entry.badge && (
+                  <Badge
+                    variant={entry.badge.variant}
+                    class={entry.badge.class}
+                    text={entry.badge.text}
+                  />
+                )}
+              </a>
+            </li>
+          );
+        }
+
+        const groupIndex = entry.entries.find(isGroupIndex);
+        const childEntries = groupIndex
+          ? entry.entries.filter((child) => child !== groupIndex)
+          : entry.entries;
+
+        return (
+          <li>
+            <details
+              class:list={{ 'linked-group': groupIndex }}
+              open={hasCurrentEntry(entry.entries) || !entry.collapsed}
+            >
+              <summary>
+                <span class="group-label">
+                  {groupIndex ? (
+                    <a
+                      href={groupIndex.href}
+                      aria-current={groupIndex.isCurrent ? 'page' : undefined}
+                      class:list={['group-index-link', groupIndex.attrs.class]}
+                      {...groupIndex.attrs}
+                    >
+                      <span class="large">{entry.label}</span>
+                    </a>
+                  ) : (
+                    <span class="large">{entry.label}</span>
+                  )}
+                  {entry.badge && (
+                    <Badge
+                      variant={entry.badge.variant}
+                      class={entry.badge.class}
+                      text={entry.badge.text}
+                    />
+                  )}
+                </span>
+                <Icon name="right-caret" class="caret" size="1.25rem" />
+              </summary>
+              <SidebarRestorePoint />
+              {childEntries.length > 0 && <Astro.self sublist={childEntries} nested />}
+            </details>
+          </li>
+        );
+      })}
+    </ul>
+  )
+}
+
+<script>
+  document.querySelectorAll('summary a[data-group-index]').forEach((link) => {
+    link.addEventListener('click', (event) => event.stopPropagation());
+  });
+</script>
+
+<style>
+  @layer starlight.core {
+    ul {
+      --sl-sidebar-item-padding-inline: 0.5rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      overflow-wrap: anywhere;
+    }
+
+    ul ul li {
+      margin-inline-start: var(--sl-sidebar-item-padding-inline);
+      border-inline-start: 1px solid var(--sl-color-hairline-light);
+      padding-inline-start: var(--sl-sidebar-item-padding-inline);
+    }
+
+    .large {
+      color: var(--sl-color-white);
+      font-size: var(--sl-text-lg);
+      font-weight: 600;
+    }
+
+    .top-level > li + li {
+      margin-top: 0.75rem;
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 0.45rem;
+      cursor: pointer;
+      line-height: 1.4;
+      padding: 0.2em var(--sl-sidebar-item-padding-inline);
+      user-select: none;
+    }
+
+    summary::marker,
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .group-label {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .group-index-link {
+      flex: 1;
+      margin: -0.2em 0 -0.2em calc(-1 * var(--sl-sidebar-item-padding-inline));
+      padding: 0.2em var(--sl-sidebar-item-padding-inline);
+    }
+
+    .caret {
+      flex-shrink: 0;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    :global([dir='rtl']) .caret {
+      transform: rotateZ(180deg);
+    }
+
+    [open] > summary .caret {
+      transform: rotateZ(90deg);
+    }
+
+    a {
+      display: block;
+      border-radius: 0.25rem;
+      color: var(--sl-color-gray-2);
+      line-height: 1.4;
+      padding: 0.3em var(--sl-sidebar-item-padding-inline);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+      color: var(--sl-color-white);
+    }
+
+    [aria-current='page'],
+    [aria-current='page']:hover,
+    [aria-current='page']:focus {
+      background-color: var(--sl-color-text-accent);
+      color: var(--sl-color-text-invert);
+      font-weight: 600;
+    }
+
+    a > *:not(:last-child),
+    .group-label > *:not(:last-child) {
+      margin-inline-end: 0.25em;
+    }
+
+    @media (min-width: 50rem) {
+      .top-level > li + li {
+        margin-top: 0.5rem;
+      }
+
+      .large {
+        font-size: var(--sl-text-base);
+      }
+
+      a {
+        font-size: var(--sl-text-sm);
+      }
+    }
+  }
+</style>

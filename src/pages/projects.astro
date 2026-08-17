@@ -1,0 +1,268 @@
+---
+import { ArrowRight, CircleDashed, Construction } from "lucide-astro";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const previews = [
+  {
+    number: "01",
+    title: "Personal website",
+    description:
+      "The design and infrastructure decisions behind this Astro site, its lab, and the publishing workflow around it.",
+    tags: ["Astro", "Cloudflare", "DNS"],
+  },
+  {
+    number: "02",
+    title: "Infrastructure lab",
+    description:
+      "A small ARM-based environment for Linux administration, containerized services, and self-hosting experiments.",
+    tags: ["Linux", "Docker", "Systems"],
+  },
+  {
+    number: "03",
+    title: "Home network",
+    description:
+      "An OpenWrt-based network for exploring routing, DNS filtering, remote access, and local service design.",
+    tags: ["OpenWrt", "WireGuard", "Networking"],
+  },
+];
+---
+
+<MainLayout
+  title="Projects"
+  description="A preview of technical projects by Oscar Granados, with fuller case studies coming soon."
+  pageClass="projects-page"
+>
+  <div class="page-shell">
+    <header class="page-header projects-header">
+      <div class="status-line">
+        <i aria-hidden="true"></i>
+        Project writeups coming soon
+      </div>
+      <p class="eyebrow">Projects</p>
+      <h1>Projects</h1>
+      <p class="page-intro">
+        I am preparing detailed pages for several technical projects. The planned
+        writeups will cover what I built, how it works, the decisions involved,
+        and what I learned.
+      </p>
+    </header>
+
+    <section class="preview-section" aria-labelledby="preview-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Preview</p>
+          <h2 id="preview-heading">Planned project writeups</h2>
+          <p>
+            These project pages will be added when their documentation is complete.
+          </p>
+        </div>
+      </div>
+
+      <div class="preview-grid">
+        {
+          previews.map((project) => (
+            <article class="project-preview panel">
+              <div class="preview-topline">
+                <span>{project.number}</span>
+                <CircleDashed aria-hidden="true" />
+              </div>
+              <div>
+                <p class="preview-status">Writeup planned</p>
+                <h3>{project.title}</h3>
+                <p class="preview-description">{project.description}</p>
+              </div>
+              <ul class="tags" aria-label={`${project.title} technologies`}>
+                {project.tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="coming-soon panel" aria-labelledby="coming-soon-heading">
+      <Construction aria-hidden="true" />
+      <div>
+        <p class="eyebrow">Coming soon</p>
+        <h2 id="coming-soon-heading">Detailed project pages</h2>
+        <p>
+          Until these writeups are ready, the lab contains my current technical
+          notes and security writeups.
+        </p>
+      </div>
+      <a class="button" href="/lab/">
+        Visit my lab <ArrowRight aria-hidden="true" />
+      </a>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .projects-header {
+    position: relative;
+    max-width: 54rem;
+  }
+
+  .status-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-block-end: 2.25rem;
+    border: 1px solid rgb(31 198 229 / 18%);
+    border-radius: 999px;
+    background: rgb(13 11 18 / 46%);
+    color: var(--color-cyan-high);
+    font-size: 0.75rem;
+    font-weight: 620;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .status-line i {
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    box-shadow: 0 0 0.7rem var(--color-cyan);
+  }
+
+  .preview-section {
+    padding-block-start: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .project-preview {
+    display: flex;
+    min-height: 25rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+  }
+
+  .project-preview:nth-child(even) {
+    border-color: rgb(244 86 157 / 15%);
+  }
+
+  .preview-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+  }
+
+  .preview-topline :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--color-cyan);
+  }
+
+  .project-preview:nth-child(even) .preview-topline :global(svg) {
+    color: var(--color-pink);
+  }
+
+  .preview-status {
+    margin-block-end: 0.45rem;
+    color: var(--color-pink);
+    font-size: 0.76rem;
+    font-weight: 650;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-preview h3 {
+    margin-block-end: 0.8rem;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+  }
+
+  .preview-description {
+    color: var(--color-text-soft);
+    font-size: 0.94rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .coming-soon {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.5rem;
+    margin-block-start: var(--section-space);
+    border-color: rgb(244 86 157 / 16%);
+    background: linear-gradient(125deg, rgb(244 86 157 / 6%), rgb(25 22 33 / 45%));
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .coming-soon > :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-pink);
+  }
+
+  .coming-soon h2 {
+    margin-block-end: 0.55rem;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+  }
+
+  .coming-soon p:last-child {
+    max-width: 44rem;
+    color: var(--color-text-soft);
+  }
+
+  .coming-soon .button {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 52rem) {
+    .preview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-preview {
+      min-height: 20rem;
+    }
+
+    .coming-soon {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .coming-soon .button {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .coming-soon {
+      grid-template-columns: 1fr;
+    }
+
+    .coming-soon .button {
+      grid-column: auto;
+    }
+  }
+</style>

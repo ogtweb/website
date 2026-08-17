@@ -1,0 +1,83 @@
+---
+import Pagination from 'virtual:starlight/components/Pagination';
+
+const { entry, lang } = Astro.locals.starlightRoute;
+const data = entry.data as typeof entry.data & {
+  contentType?: 'navigation' | 'entry';
+  date?: Date;
+};
+const publicationDate =
+  data.contentType === 'entry' && data.date instanceof Date
+    ? data.date
+    : undefined;
+
+const firstPublicationYear = 2026;
+const currentYear = new Date().getFullYear();
+const copyrightYears =
+  currentYear > firstPublicationYear
+    ? `${firstPublicationYear}–${currentYear}`
+    : `${firstPublicationYear}`;
+---
+
+<footer class="lab-footer">
+  <Pagination />
+
+  <div class:list={['lab-footer-meta', { 'has-publication-date': publicationDate }]}>
+    {
+      publicationDate && (
+        <p class="publication-date">
+          Published{' '}
+          <time datetime={publicationDate.toISOString()}>
+            {publicationDate.toLocaleDateString(lang, {
+              dateStyle: 'long',
+              timeZone: 'UTC',
+            })}
+          </time>
+        </p>
+      )
+    }
+
+    <p class="copyright">
+      © {copyrightYears} sprackles. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .lab-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .lab-footer-meta {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem 2rem;
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+    padding-top: 1.25rem;
+  }
+
+  .lab-footer-meta.has-publication-date {
+    justify-content: space-between;
+  }
+
+  .lab-footer-meta p {
+    margin: 0;
+  }
+
+  .publication-date time {
+    color: var(--sl-color-gray-2);
+  }
+
+  @media (max-width: 36rem) {
+    .lab-footer-meta,
+    .lab-footer-meta.has-publication-date {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

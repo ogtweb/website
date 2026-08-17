@@ -1,0 +1,51 @@
+---
+---
+
+<a class="lab-site-title" href="/lab/" aria-label="My Lab home">
+  <img class="lab-mark" src="/lab-site-icon-v5.png" alt="" aria-hidden="true" />
+  <span class="lab-wordmark">
+    <span>My Lab</span>
+  </span>
+</a>
+
+<style>
+  .lab-site-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+    color: var(--sl-color-white);
+    text-decoration: none;
+  }
+
+  .lab-mark {
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    border-radius: 0.55rem;
+    box-shadow: 0 0 1.2rem rgb(15 182 214 / 13%);
+    object-fit: cover;
+  }
+
+  .lab-wordmark {
+    display: flex;
+    min-width: 0;
+    align-items: baseline;
+    gap: 0.45rem;
+    overflow: hidden;
+    font-size: var(--sl-text-base);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .lab-wordmark > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 26rem) {
+    .lab-wordmark > span {
+      display: none;
+    }
+  }
+</style>

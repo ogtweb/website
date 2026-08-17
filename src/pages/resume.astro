@@ -1,0 +1,457 @@
+---
+import { ArrowRight, BadgeCheck, BriefcaseBusiness, GraduationCap, Mail } from "lucide-astro";
+import MainLayout from "../layouts/MainLayout.astro";
+
+const experience = [
+  {
+    role: "Fulfillment Associate → IT Equipment Coordinator",
+    company: "Amazon",
+    dates: "2019 - 2026",
+    description:
+      "Worked in high-volume fulfillment operations, trained associates, supported process consistency, and developed strong operational discipline in fast-paced environments. Now working in asset management, device provisioning, technical support, and coordinating technology projects to support on-going business operations."
+
+  },
+  {
+    role: "IT Desktop Analyst II",
+    company: "KnowIT",
+    dates: "2025",
+    description:
+      "Supported an MSP/MSSP organization in infrastructure and cybersecurity operations dealing with devices including desktops, servers, network switches and access points, and printers.",
+  },
+  {
+    role: "IT Technician",
+    company: "Nevada Restaurant Services Inc.",
+    dates: "2024 - 2025",
+    description:
+      "Supported distributed restaurant and gaming environments across endpoints, printers, payment devices, networking equipment, remote access tools, and service desk workflows.",
+  },
+  {
+    role: "Payment Support Representative",
+    company: "Shift4",
+    dates: "2025",
+    description:
+      "Provided B2B support for payment systems, merchant accounts, terminals, point-of-sale integrations, and troubleshooting workflows.",
+  },
+];
+
+const certificationGroups = [
+  {
+    title: "IT and systems",
+    certifications: [
+      "CompTIA A+",
+      "LPI Linux Essentials",
+      "ITIL 4 Foundation",
+    ],
+  },
+  {
+    title: "Networking and security",
+    certifications: ["CompTIA Network+", "CompTIA Security+"],
+  },
+  {
+    title: "Cloud and projects",
+    certifications: [
+      "CompTIA Cloud+",
+      "AWS Certified Cloud Practitioner",
+      "CompTIA Project+",
+    ],
+  },
+];
+
+const strengths = [
+  "Technical troubleshooting",
+  "Endpoint and device support",
+  "Information technology operations",
+  "Network infrastructure",
+  "Process documentation",
+  "Customer-facing support",
+];
+---
+
+<MainLayout
+  title="Resume"
+  description="Professional experience, education, and technical certifications for Oscar Granados."
+  pageClass="resume-page"
+>
+  <div class="page-shell">
+    <header class="resume-header">
+      <div>
+        <p class="eyebrow">Resume</p>
+        <h1>Experience, education, and certifications</h1>
+        <p class="page-intro">
+          My background combines hands-on IT support, operational discipline,
+          customer-facing troubleshooting, and ongoing computer science study.
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="mailto:oscar@ogtech.dev">
+            Contact me <Mail aria-hidden="true" />
+          </a>
+          <a class="button" href="/about">More about me</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="resume-layout">
+      <div class="resume-main">
+        <section class="resume-section" aria-labelledby="experience-heading">
+          <div class="resume-section-heading">
+            <BriefcaseBusiness aria-hidden="true" />
+            <div>
+              <p class="eyebrow">Professional history</p>
+              <h2 id="experience-heading">Experience</h2>
+            </div>
+          </div>
+
+          <div class="timeline">
+            {
+              experience.map((item) => (
+                <article class="timeline-item">
+                  <div class="timeline-marker" aria-hidden="true"></div>
+                  <p class="timeline-dates">{item.dates}</p>
+                  <h3>{item.role}</h3>
+                  <p class="company">{item.company}</p>
+                  <p class="timeline-description">{item.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+
+      <aside class="resume-sidebar">
+        <section class="sidebar-section" aria-labelledby="education-heading">
+          <div class="sidebar-heading">
+            <GraduationCap aria-hidden="true" />
+            <h2 id="education-heading">Education</h2>
+          </div>
+          <article>
+            <h3>B.S. Computer Science</h3>
+            <p>Western Governors University</p>
+            <span>In progress</span>
+          </article>
+          <article>
+            <h3>Coursework</h3>
+            <p>College of Southern Nevada</p>
+          </article>
+        </section>
+
+        <section class="sidebar-section" aria-labelledby="strengths-heading">
+          <div class="sidebar-heading">
+            <BriefcaseBusiness aria-hidden="true" />
+            <h2 id="strengths-heading">Core strengths</h2>
+          </div>
+          <ul class="strengths-list">
+            {strengths.map((strength) => <li>{strength}</li>)}
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <section class="certifications-section" aria-labelledby="certifications-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Credentials</p>
+          <h2 id="certifications-heading">Industry Certifications</h2>
+          <p>
+            Current technical and service-management certifications.
+          </p>
+        </div>
+      </div>
+
+      <div class="certification-groups">
+        {
+          certificationGroups.map((group) => (
+            <section class="certification-group" aria-labelledby={`certification-${group.title.replaceAll(" ", "-")}`}>
+              <h3 id={`certification-${group.title.replaceAll(" ", "-")}`}>{group.title}</h3>
+              <ul>
+                {group.certifications.map((certification) => (
+                  <li>
+                    <BadgeCheck aria-hidden="true" />
+                    <span>{certification}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="resume-next panel" aria-labelledby="resume-next-heading">
+      <div>
+        <p class="eyebrow">Related</p>
+        <h2 id="resume-next-heading">Technical notes and security writeups</h2>
+      </div>
+      <a class="button" href="/lab/">
+        Visit my lab <ArrowRight aria-hidden="true" />
+      </a>
+    </section>
+  </div>
+</MainLayout>
+
+<style>
+  .resume-header {
+    max-width: 53rem;
+    padding-block: clamp(4.5rem, 10vw, 7rem);
+  }
+
+  .resume-header h1 {
+    max-width: 13ch;
+    margin-block-end: 1rem;
+    font-size: clamp(3rem, 8vw, 5.75rem);
+    font-weight: 720;
+  }
+
+  .resume-header .page-intro {
+    margin-block-end: 1.75rem;
+  }
+
+  .resume-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.65fr);
+    gap: clamp(3rem, 8vw, 6rem);
+    border-top: 1px solid var(--color-border);
+    padding-block-start: clamp(3rem, 7vw, 5rem);
+  }
+
+  .resume-section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-block-end: 2.5rem;
+  }
+
+  .resume-section-heading > :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-block-start: 0.25rem;
+    color: var(--color-cyan);
+  }
+
+  .resume-section-heading h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .timeline-item {
+    position: relative;
+    border-left: 1px solid var(--color-border-strong);
+    padding: 0 0 3rem 1.6rem;
+  }
+
+  .timeline-item:last-child {
+    padding-block-end: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    top: 0.4rem;
+    left: -0.28rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--color-cyan);
+    border-radius: 50%;
+    background: var(--color-bg);
+    box-shadow: 0 0 0.75rem rgb(31 198 229 / 28%);
+  }
+
+  .timeline-dates {
+    margin-block-end: 0.35rem;
+    color: var(--color-pink);
+    font-size: 0.76rem;
+    font-weight: 650;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .timeline-item h3 {
+    margin-block-end: 0.25rem;
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+  }
+
+  .company {
+    margin-block-end: 0.8rem;
+    color: var(--color-cyan-high);
+    font-size: 0.95rem;
+    font-weight: 580;
+  }
+
+  .timeline-description {
+    max-width: 45rem;
+    color: var(--color-text-soft);
+  }
+
+  .resume-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+
+  .sidebar-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-block-end: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-block-end: 0.75rem;
+  }
+
+  .sidebar-heading :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--color-pink);
+  }
+
+  .sidebar-heading h2 {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section article {
+    margin-block-end: 1.2rem;
+  }
+
+  .sidebar-section article h3 {
+    margin-block-end: 0.15rem;
+    font-size: 1rem;
+  }
+
+  .sidebar-section article p,
+  .sidebar-section article span {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .strengths-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .strengths-list li {
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .certifications-section {
+    padding-block-start: var(--section-space);
+  }
+
+  .certification-groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border-strong);
+  }
+
+  .certification-group {
+    min-width: 0;
+    padding: 1.5rem;
+  }
+
+  .certification-group + .certification-group {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .certification-group h3 {
+    margin-block-end: 1.1rem;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .certification-group ul {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .certification-group li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0.6rem;
+    color: var(--color-text);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .certification-group li :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    margin-block-start: 0.15rem;
+    color: var(--color-cyan);
+  }
+
+  .resume-next {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-block-start: var(--section-space);
+    border-color: rgb(244 86 157 / 16%);
+    background: linear-gradient(125deg, rgb(244 86 157 / 6%), rgb(25 22 33 / 45%));
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .resume-next h2 {
+    max-width: 25ch;
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+  }
+
+  .resume-next .button {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 58rem) {
+    .resume-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .resume-sidebar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+
+  }
+
+  @media (max-width: 46rem) {
+    .certification-groups {
+      grid-template-columns: 1fr;
+    }
+
+    .certification-group + .certification-group {
+      border-top: 1px solid var(--color-border);
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 38rem) {
+    .resume-header h1 {
+      font-size: clamp(2.8rem, 15vw, 4.5rem);
+    }
+
+    .resume-sidebar {
+      grid-template-columns: 1fr;
+    }
+
+    .resume-next {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

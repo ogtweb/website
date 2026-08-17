@@ -1,0 +1,11 @@
+<script is:inline>
+  document.documentElement.dataset.theme = 'dark';
+
+  try {
+    localStorage.setItem('starlight-theme', 'dark');
+  } catch {}
+
+  window.StarlightThemeProvider = {
+    updatePickers() {},
+  };
+</script>

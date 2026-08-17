@@ -1,0 +1,45 @@
+---
+import config from 'virtual:starlight/user-config';
+import { Icon } from '@astrojs/starlight/components';
+
+const links = config.social || [];
+---
+
+{
+  links.map(({ label, href, icon }) => (
+    <a href={href} rel="me" class="github-identity" aria-label={label}>
+      <Icon name={icon} size="1.15rem" />
+      {icon === 'github' && <span>sprackles</span>}
+    </a>
+  ))
+}
+
+<style>
+  .github-identity {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid transparent;
+    border-radius: 0.45rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    font-weight: 560;
+    line-height: 1;
+    padding: 0.45rem 0.55rem;
+    text-decoration: none;
+    transition:
+      color 150ms ease,
+      border-color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .github-identity:hover {
+    border-color: rgb(31 198 229 / 22%);
+    background: rgb(31 198 229 / 6%);
+    color: var(--sl-color-white);
+  }
+
+  .github-identity :global(svg) {
+    color: var(--sl-color-accent);
+  }
+</style>
