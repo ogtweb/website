@@ -35,10 +35,10 @@ that still feels useful and enjoyable to me.
 
 ## The Project So Far
 
-The current focus is security writeups: notes on solving rooms and challenges
-across CTF and learning platforms.
+The current focus includes security writeups, exploratory study notes, and
+projects that I maintain and improve over time.
 
-> **Projects and labs:** Coming soon.
+> **Labs:** Coming soon.
 
 ## Natural Growth
 

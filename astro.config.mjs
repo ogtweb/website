@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
+import mermaid from 'astro-mermaid';
 import starlight from '@astrojs/starlight';
 import { LAB_SITE, SITE_URL } from './src/config/site.mjs';
 
@@ -9,12 +11,22 @@ const labPreviewImage = new URL(LAB_SITE.iconPath, SITE_URL).href;
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
+  markdown: {
+    processor: unified(),
+  },
   redirects: {
     '/lab/writeups/towel-on-the-sunbed':
       '/lab/writeups/tryhackme/towel-on-the-sunbed',
     '/lab/writeups/tryhackme': '/lab/writeups',
   },
   integrations: [
+    mermaid({
+      autoTheme: true,
+      enableLog: false,
+      mermaidConfig: {
+        securityLevel: 'strict',
+      },
+    }),
     starlight({
       title: LAB_SITE.title,
       description: LAB_SITE.description,
@@ -112,6 +124,21 @@ export default defineConfig({
             {
               autogenerate: {
                 directory: 'lab/exploratory',
+              },
+            },
+          ],
+        },
+        {
+          label: 'Projects',
+          items: [
+            {
+              link: '/lab/projects/',
+              label: 'Projects',
+              attrs: { 'data-group-index': 'true' },
+            },
+            {
+              autogenerate: {
+                directory: 'lab/projects',
               },
             },
           ],
